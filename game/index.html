@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="tr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#293e35"><title>Maşanın Kafesi</title></head>
+<body style="margin:0;background:#293e35;color:#f9ebd8;font-family:system-ui,sans-serif">
+<div id="app"><section style="max-width:480px;margin:15vh auto;padding:28px;line-height:1.7">
+<h1>Maşanın Kafesi</h1><p id="boot-message" role="status">Oyun hazırlanıyor…</p>
+<noscript>Oyunu açmak için tarayıcında JavaScript etkin olmalı.</noscript>
+</section></div>
+<script type="module">
+const message = document.getElementById('boot-message');
+if (location.protocol === 'file:') {
+  message.textContent = 'Bu dosya oyun kaynak dosyasıdır. Oyunu açmak için suseme_hediye klasöründeki OYUNU_BASLAT.cmd dosyasını çalıştır. Ardından tarayıcıda http://localhost:5173 adresini aç. İlk kurulum internet bağlantısı gerektirir.';
+} else {
+  import('./src/main.ts').catch(error => {
+    console.error('Oyun başlatılamadı:', error);
+    document.getElementById('app').replaceChildren();
+    const notice = document.createElement('p');
+    notice.style.cssText = 'max-width:480px;margin:15vh auto;padding:28px;line-height:1.7';
+    notice.textContent = 'Oyun başlatılamadı. Sayfayı yenile. Sorun sürerse OYUNU_BASLAT.cmd penceresindeki hata mesajını kontrol et.';
+    document.getElementById('app').append(notice);
+  });
+}
+</script></body>
+</html>
